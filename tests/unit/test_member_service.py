@@ -1,7 +1,7 @@
 import pytest
 
 @pytest.mark.unit
-@pytest.mark.task1
+@pytest.mark.task2
 def test_add_member(member_service, mocker):
     """
     TTests that add_member() registers a new member.

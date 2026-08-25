@@ -1,7 +1,7 @@
 import pytest
 
 @pytest.mark.unit
-@pytest.mark.task1
+@pytest.mark.task2
 def test_sign_up(sample_event):
     """
     Tests that sign_up() method correctly adds a member to an events enrolled_members list
