@@ -4,9 +4,105 @@ Skapa ett projekt enligt alla konstens regler, på det sätt vi gått igenom på
 [![UML-diagram](images/project_setup.png)](images/project_setup.png)
 
 ## 1️⃣Diskussion
-Skapa en egen uppgift som handlar om att skriva integrationstest. Uppgiften ska träna på det vi gått igenom på lektionen:
-integrationstest
-markers (gärna spy också)
+
+### Uppgift: 
+
+Integrationstesta ett hotellbokningssystem
+
+Du ska skapa ett enkelt hotellbokningssystem bestående av klasserna:
+
+Guest  
+Room  
+Payment  
+Booking  
+
+Guest ska representera en gäst och innehålla gästens information, exempelvis namn, 
+telefonnummer och e-postadress.
+
+Room ska representera ett hotellrum. Ett rum har ett rumsnummer, ett pris och 
+information om huruvida rummet är ledigt. Rummet ska kunna bokas och släppas.
+
+Payment ska hantera betalning för en bokning. En betalning ska kunna lyckas 
+eller misslyckas.
+
+Booking ska representera en bokning och ansvara för att samordna bokningen av ett 
+rum och betalningen.
+
+### Krav på bokningsflödet
+
+En bokning ska följa dessa regler:
+
+    1. Ett ledigt rum ska kunna bokas om betalningen lyckas.
+    2. Om betalningen misslyckas ska rummet förbli ledigt.
+    3. Ett rum som redan är bokat ska inte kunna bokas igen.
+    4. Om rummet redan är bokat ska ingen betalning genomföras.
+    5. Vid betalning ska rummets pris användas som betalningsbelopp.
+
+### Integrationstester
+
+Skriv integrationstester som testar interaktionen mellan klasserna, inte bara de 
+enskilda klassernas interna funktionalitet.
+
+Testa minst följande scenarier:
+1. Lyckad bokning
+
+Ett ledigt rum bokas och betalningen lyckas.
+
+Verifiera att:
+
+- bokningen lyckas
+- betalningen genomförs med rätt belopp
+- rummet blir upptaget
+
+2. Misslyckad betalning
+
+Ett ledigt rum ska bokas men betalningen misslyckas.
+
+Verifiera att:
+
+- bokningen misslyckas
+- betalningen har genomförts med rätt belopp
+- rummet fortfarande är ledigt
+
+3. Redan bokat rum
+
+Försök boka ett rum som redan är bokat.
+
+Verifiera att:
+
+- bokningen misslyckas 
+- ingen betalning genomförs 
+- rummet förblir upptaget
+
+### Testteknik
+
+Använd pytest och använd en spy för att verifiera betalningar (anrop till pay(). Använd en 
+fixture för instanser av klassen room. Denna ska finnas i filen "conftest.py".
+
+
+### Förslag lösning
+```
+pytest -v -m "task1"
+```
+Filer:  
+hotel\booking.py  
+hotel\guest.py  
+hotel\payment.py  
+hotel\room.py  
+
+Testfiler:  
+integration\test_booking_room.py  
+integration\test_booking_payment.py
+
+I conftest.py:  
+```
+@pytest.fixture
+def sample_room():
+    """
+    Creates a payment object for testing.
+    """
+    return Room(101, 1500)
+```
 
 ## 2️⃣Anmälningar
 ```

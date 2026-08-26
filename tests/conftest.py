@@ -3,6 +3,7 @@ from enrollments.event import Event
 from enrollments.member_service import MemberService
 from shoppingcart.inventory import Inventory
 from transactions.logger import Logger
+from hotel.room import Room
 
 
 @pytest.fixture
@@ -32,6 +33,13 @@ def sample_logger():
     Creates a logger object for testing.
     """
     return Logger()
+
+@pytest.fixture
+def sample_room():
+    """
+    Creates a payment object for testing.
+    """
+    return Room(101, 1500)
 
 
 
