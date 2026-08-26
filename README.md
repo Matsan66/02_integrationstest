@@ -61,7 +61,7 @@ shoppingcart\inventory.py
 shoppingcart\shopping_cart.py  
 
 Testfiler:
-unit\test_inventory_shopping_cart.py
+integration\test_inventory_shopping_cart.py
 
 ``` 
     def add_inventory_item(self, item, amount):
@@ -98,8 +98,45 @@ def sample_inventory():
     return Inventory()
 ```
 
-
 ## 4️⃣Spårbara transaktioner
+```
+pytest -v -m "task4"
+```
+BankAccount
+def deposit() ← testa denna
+logger ska skriva "deposit: ? kr, saldo ? kr"  
+def withdraw() ← testa denna om tillräckligt med pengar finns: logger ska skriva 
+"withdraw: ? kr, saldo ? kr" annars: "withdraw: kunde inte ta ut ? kr från kontot"  
+
+Logger  
+def log() ← spionera på denna
+Skriver ut en sträng med print()
+
+Transaction  
+def transfer(amount, from_account, to_account) ← testa denna
+Överför pengar från ett konto till ett annat, med hjälp av deposit och withdraw, 
+om det finns pengar.
+
+Filer:  
+transactions\bank_account.py  
+transactions\logger.py  
+transactions\transaction.py  
+
+Testfiler:
+integration\test_bank_account_logger.py
+integration\test_bank_account_transaction.py
+
+I conftest.py:  
+```
+@pytest.fixture
+def sample_logger():
+    """
+    Creates a logger object for testing.
+    """
+    return Logger()
+```
+
+
 
 ## 5️⃣Betalningar
 

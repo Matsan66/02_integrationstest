@@ -2,6 +2,7 @@ import pytest
 from enrollments.event import Event
 from enrollments.member_service import MemberService
 from shoppingcart.inventory import Inventory
+from transactions.logger import Logger
 
 
 @pytest.fixture
@@ -24,6 +25,13 @@ def sample_inventory():
     Creates an inventory object for testing.
     """
     return Inventory()
+
+@pytest.fixture
+def sample_logger():
+    """
+    Creates a logger object for testing.
+    """
+    return Logger()
 
 
 
