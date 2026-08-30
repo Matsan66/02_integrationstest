@@ -1,7 +1,7 @@
 ## 0️⃣Projektstruktur
 Skapa ett projekt enligt alla konstens regler, på det sätt vi gått igenom på lektionen.
 
-[![UML-diagram](images/project_setup.png)](images/project_setup.png)
+[![Projektstruktur](images/project_setup.png)](images/project_setup.png)
 
 ## 1️⃣Diskussion
 
@@ -85,14 +85,14 @@ fixture för instanser av klassen room. Denna ska finnas i filen "conftest.py".
 pytest -v -m "task1"
 ```
 Filer:  
-hotel\booking.py  
-hotel\guest.py  
-hotel\payment.py  
-hotel\room.py  
+src\hotel\booking.py  
+src\hotel\guest.py  
+src\hotel\payment.py  
+src\hotel\room.py  
 
 Testfiler:  
-integration\test_booking_room.py  
-integration\test_booking_payment.py
+tests\integration\test_booking_room.py  
+tests\integration\test_booking_payment.py
 
 I conftest.py:  
 ```
@@ -118,13 +118,13 @@ MemberService
 def add_member() ← enhetstest, spionera på denna
 
 Filer:  
-enrollments\event.py  
-enrollments\member_service.py  
+src\enrollments\event.py  
+src\enrollments\member_service.py  
 
 Testfiler:  
-unit\test_event.py  
-unit\test_member_service.py  
-unit\test_event_member_service.py
+tests\unit\test_event.py  
+tests\unit\test_member_service.py  
+tests\unit\test_event_member_service.py
 
 I conftest.py:  
 ```
@@ -153,11 +153,11 @@ Gör ett integrationstest som kontrollerar att man inte kan lägga till saker so
 finns på lager. Integrationstesta add_inventory_item().
 
 Filer:  
-shoppingcart\inventory.py  
-shoppingcart\shopping_cart.py  
+src\shoppingcart\inventory.py  
+src\shoppingcart\shopping_cart.py  
 
 Testfiler:
-integration\test_inventory_shopping_cart.py
+tests\integration\test_inventory_shopping_cart.py
 
 ``` 
     def add_inventory_item(self, item, amount):
@@ -214,13 +214,13 @@ def transfer(amount, from_account, to_account) ← testa denna
 om det finns pengar.
 
 Filer:  
-transactions\bank_account.py  
-transactions\logger.py  
-transactions\transaction.py  
+src\transactions\bank_account.py  
+src\transactions\logger.py  
+src\transactions\transaction.py  
 
 Testfiler:
-integration\test_bank_account_logger.py
-integration\test_bank_account_transaction.py
+tests\integration\test_bank_account_logger.py
+tests\integration\test_bank_account_transaction.py
 
 I conftest.py:  
 ```
@@ -235,4 +235,38 @@ def sample_logger():
 
 
 ## 5️⃣Betalningar
+```
+pytest -v -m "task5"
+```
+För att hantera betalningar är koden uppdelad i en klass som representerar beställningar 
+och en som skickar vidare betalningar till en extern tjänst.
+
+- Order - beställningar (lista med produkter och belopp)  
+status = "unpaid" (egenskap)  
+def make_payment() ← testa denna
+- 
+- PaymentGateway ← mocka denna (vi vill inte köpa saker på riktigt varje gång vi testar)   
+execute_payment() ← returnerar True om betalningen gått igenom
+
+Testa flödet:
+1. Skapa en beställning (order-objekt)
+2. Mocka betalningsklassen och spionera på execute_payment 
+3. Genomför betalning (metoden make_payment)
+4. Kontrollera att execute_payment anropas med rätt belopp 
+5. Kontrollera att ordern får status "paid"
+
+Gör sedan ett likadant test, fast som simulerar att något gått fel i betalningen:  
+1. execute_payment ska returnera False och orderstatus ska bli "error".
+
+Filer:  
+src\orders\order.py  
+src\orders\payment_gateway.py 
+
+Testfiler:
+tests\integration\test_order_paymentgateway.py
+
+
+
+
+
 
